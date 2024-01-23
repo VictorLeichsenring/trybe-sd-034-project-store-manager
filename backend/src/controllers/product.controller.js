@@ -1,3 +1,4 @@
+const { productModel } = require('../models');
 const { productService } = require('../services');
 const mapStatusHTTP = require('../utils/mapStatusHTTP');
 
@@ -30,9 +31,16 @@ const updateProduct = async (req, res) => {
   return res.status(mapStatusHTTP(status)).json(data);
 };
 
+const deleteProduct = async (req, res) => {
+  const { id } = req.params;
+  const result = await productModel.remove(id);
+  res.status(204).send(result);
+};
+
 module.exports = {
   findAllProducts,
   findProductById,
   createProduct,
   updateProduct,
+  deleteProduct,
 };

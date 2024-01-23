@@ -32,9 +32,14 @@ const updateProduct = async (productObject) => {
   return { status: 'SUCCESSFUL', data: UpdatedProduct };
 };
 
+const removeProduct = async (id) => {
+  await productModel.remove(id);
+};
+
 module.exports = {
   findAll,
   findById,
   insertProduct,
   updateProduct,
+  removeProduct,
 };
