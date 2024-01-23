@@ -3,14 +3,21 @@ const connection = require('./connection');
 
 const findAll = async () => {
   const [sales] = await connection.execute(
-    'SELECT * FROM sales_products ORDER BY sale_id, product_id',
+    'SELECT sp.sale_id, s.date, sp.product_id, sp.quantity '
+      + 'FROM sales_products sp '
+      + 'JOIN sales s ON sp.sale_id = s.id '
+      + 'ORDER BY sp.sale_id, sp.product_id',
   );
   return sales;
 };
 
 const findById = async (saleId) => {
   const [sale] = await connection.execute(
-    'SELECT * FROM sales_products WHERE sale_id = ? ORDER BY sale_id, product_id',
+    'SELECT s.date, sp.product_id, sp.quantity '
+      + 'FROM sales_products sp '
+      + 'JOIN sales s ON sp.sale_id = s.id '
+      + 'WHERE sp.sale_id = ? '
+      + 'ORDER BY s.date',
     [saleId],
   );
 

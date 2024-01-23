@@ -3,6 +3,7 @@ const mapStatusHTTP = require('../utils/mapStatusHTTP');
 
 const findAll = async (_req, res) => {
   const { status, data } = await saleService.findAll();
+  return data;
   return res.status(mapStatusHTTP(status)).json(data);
 };
 
