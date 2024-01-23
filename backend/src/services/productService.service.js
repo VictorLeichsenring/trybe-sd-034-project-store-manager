@@ -29,7 +29,7 @@ const updateProduct = async (productObject) => {
 
   await productModel.update(productObject);
   const UpdatedProduct = await productModel.findById(productObject.id);
-  return { status: 'CREATED', data: UpdatedProduct };
+  return { status: 'SUCCESSFUL', data: UpdatedProduct };
 };
 
 module.exports = {
