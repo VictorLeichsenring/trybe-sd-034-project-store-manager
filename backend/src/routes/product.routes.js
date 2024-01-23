@@ -2,10 +2,10 @@ const route = require('express').Router();
 const { productController } = require('../controllers');
 const validateProductFields = require('../middlewares/validateProductFields');
 
-route.get('/products', productController.findAllProducts);
-route.get('/product/:id', productController.findProductById);
+route.get('/', productController.findAllProducts);
+route.get('/:id', productController.findProductById);
 route.post(
-  '/products',
+  '/',
   validateProductFields,
   productController.createProduct,
 );
