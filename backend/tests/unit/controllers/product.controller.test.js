@@ -15,6 +15,7 @@ const {
   productFromServiceInvalid,
   productsFromModel,
   productFromModel,
+  productUpdateSucessful,
 } = require('../mock/product.mock');
 
 describe('Realizando testes - PRODUCT CONTROLLER', function () {
@@ -65,7 +66,7 @@ describe('Realizando testes - PRODUCT CONTROLLER', function () {
   });
 
   it('Adicionado produtos ao banco de dados', async function () {
-    const stub = sinon.stub(productService, 'insertProduct')
+    sinon.stub(productService, 'insertProduct')
       .returns(productInsertFromServiceSuccessful);
     const req = {
       params: {},
@@ -77,23 +78,36 @@ describe('Realizando testes - PRODUCT CONTROLLER', function () {
     };
     await productController.createProduct(req, res);
     expect(res.status).to.have.been.calledWith(201);
-    stub.restore();
   });
 
-  // it('Atualizando produtos no banco de dados', async function () {
-  //   const stub = sinon.stub(productService, 'updateProduct')
-  //     .returns(productInsertFromServiceSuccessful);
+  it('Atualizando produtos no banco de dados', async function () {
+    sinon.stub(productService, 'updateProduct')
+      .resolves(productUpdateSucessful);
+    const req = {
+      params: { id: 2 },
+      body: { name: 'celular' },
+    };
+    const res = {
+      status: sinon.stub().returnsThis(),
+      json: sinon.stub(),
+    };
+    await productController.updateProduct(req, res);
+    expect(res.status).to.have.been.calledWith(200);
+  });
+
+  // it('deletar produtos no banco de dados', async function () {
+  //   sinon.stub(productModel, 'remove')
+  //     .resolves(deleteSuccessful);
   //   const req = {
-  //     params: {},
-  //     body: { name: 'banana' },
+  //     params: { id: 2 },
+  //     body: { },
   //   };
   //   const res = {
   //     status: sinon.stub().returnsThis(),
   //     json: sinon.stub(),
   //   };
-  //   await productController.createProduct(req, res);
-  //   expect(res.status).to.have.been.calledWith(201);
-  //   stub.restore();
+  //   await productController.deleteProduct(req, res);
+  //   expect(res.status).to.be.equal(204);
   // });
 
   afterEach(function () {

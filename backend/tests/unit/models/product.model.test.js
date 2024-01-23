@@ -6,7 +6,6 @@ const { productModel } = require('../../../src/models');
 const { 
   productFromDB,
   productsFromDB,
-  insertId,
 } = require('../mock/product.mock');
 
 describe('Realizando testes - PRODUCT MODEL', function () {

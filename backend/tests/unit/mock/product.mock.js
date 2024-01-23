@@ -41,6 +41,20 @@ const productFromServiceSuccessful = {
   data: productFromModel,
 };
 
+const productUpdate = {
+  id: 2,
+  name: 'celular',
+};
+
+const productUpdateSucessful = {
+  status: 'SUCCESSFUL',
+  data: productUpdate,
+};
+
+const deleteSuccessful = {
+  status: 204,
+};
+
 const productInsertFromServiceSuccessful = {
   status: 'CREATED',
   data: newProduct,
@@ -57,6 +71,8 @@ const productsFromServiceSuccessful = {
 };
 
 module.exports = {
+  productUpdateSucessful,
+  deleteSuccessful,
   productsFromDB,
   newProduct,
   insertId,
