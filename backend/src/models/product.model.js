@@ -33,7 +33,7 @@ const update = async (product) => {
 
   // Substitui valores indefinidos por null
   const sanitizedProductInfo = Object.fromEntries(
-    Object.entries(productInfo).map(([key, value]) => [key, value !== undefined ? value : null])
+    Object.entries(productInfo).map(([key, value]) => [key, value !== undefined ? value : null]),
   );
 
   const setClause = Object.keys(sanitizedProductInfo)
