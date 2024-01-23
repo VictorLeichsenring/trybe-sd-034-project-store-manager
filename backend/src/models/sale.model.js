@@ -1,4 +1,4 @@
-// const camelize = require('camelize');
+const camelize = require('camelize');
 const connection = require('./connection');
 
 const findAll = async () => {
@@ -13,7 +13,7 @@ const findAll = async () => {
 
 const findById = async (saleId) => {
   const [sale] = await connection.execute(
-    'SELECT s.date, sp.product_id, sp.quantity '
+    'SELECT s.id AS saleId, s.date AS date, sp.product_id AS productId, sp.quantity AS quantity '
     + 'FROM sales_products sp '
     + 'JOIN sales s ON sp.sale_id = s.id '
     + 'WHERE sp.sale_id = ? '
@@ -21,7 +21,7 @@ const findById = async (saleId) => {
     [saleId],
   );
 
-  return sale;
+  return camelize(sale);
 };
 
 const insertSale = async () => {

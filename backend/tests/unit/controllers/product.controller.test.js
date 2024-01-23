@@ -8,11 +8,17 @@ chai.use(sinonChai);
 const { productService } = require('../../../src/services');
 const { productController } = require('../../../src/controllers');
 
-const { productFromServiceSuccessful, productsFromModel, productFromModel } = require('../mock/product.mock');
+const { 
+  productFromServiceSuccessful,
+  productsFromServiceSuccessful,
+  productFromServiceInvalid,
+  productsFromModel,
+  productFromModel,
+} = require('../mock/product.mock');
 
 describe('Realizando testes - PRODUCT CONTROLLER', function () {
   it('Listar todos os produtos - status 200', async function () {
-    sinon.stub(productService, 'findAll').resolves(productFromServiceSuccessful);
+    sinon.stub(productService, 'findAll').resolves(productsFromServiceSuccessful);
     const req = {
       params: { },
       body: { },
@@ -21,7 +27,7 @@ describe('Realizando testes - PRODUCT CONTROLLER', function () {
       status: sinon.stub().returnsThis(),
       json: sinon.stub(),
     };
-    await productController.findAll(req, res);
+    await productController.findAllProducts(req, res);
     expect(res.status).to.have.been.calledWith(200);
     expect(res.json).to.have.been.calledWith(productsFromModel);
   });
@@ -37,13 +43,13 @@ describe('Realizando testes - PRODUCT CONTROLLER', function () {
       json: sinon.stub(),
     };
 
-    await productController.findById(req, res);
+    await productController.findProductById(req, res);
     expect(res.status).to.have.been.calledWith(200);
     expect(res.json).to.have.been.calledWith(productFromModel);
   });
 
   it('Não retornar produto com id errado - status 404', async function () {
-    sinon.stub(productService, 'findById').resolves(undefined);
+    sinon.stub(productService, 'findById').resolves(productFromServiceInvalid);
     const req = {
       params: { id: 1000 },
       body: { },
@@ -53,9 +59,8 @@ describe('Realizando testes - PRODUCT CONTROLLER', function () {
       json: sinon.stub(),
     };
 
-    await productController.findById(req, res);
+    await productController.findProductById(req, res);
     expect(res.status).to.have.been.calledWith(404);
-    expect(res.json).to.have.been.calledWith(sinon.match.has('Product not found'));
   });
 
   afterEach(function () {

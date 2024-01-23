@@ -1,3 +1,4 @@
+const { object } = require('joi');
 const { productModel } = require('../models');
 const schema = require('./validations/validationsInputValues');
 
@@ -23,8 +24,15 @@ const insertProduct = async (productObject) => {
   return { status: 'CREATED', data: newProduct };
 };
 
+const updateProduct = async (productObject) => {
+  await productModel.update(productObject);
+  const UpdatedProduct = await productModel.findById(object.productId);
+  return { status: 'CREATED', data: UpdatedProduct };
+};
+
 module.exports = {
   findAll,
   findById,
   insertProduct,
+  updateProduct,
 };

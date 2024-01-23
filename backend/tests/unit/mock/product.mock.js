@@ -1,13 +1,3 @@
-const productsFromDB = [
-  {
-    id: 1,
-    name: 'Martelo de Thor',
-  },
-  {
-    id: 2,
-    name: 'Traje de encolhimento',
-  },
-];
 const productsFromModel = [
   {
     id: 1,
@@ -19,31 +9,30 @@ const productsFromModel = [
   },
 ];
 
-const productFromDB = {
-  id: 1,
-  name: 'Martelo de Thor',
-};
-
 const productFromModel = {
   id: 1,
   name: 'Martelo de Thor',
 };
 
 const productFromServiceSuccessful = {
-  status: 'SUCCESSFULL',
-  data: productFromDB,
+  status: 'SUCCESSFUL',
+  data: productFromModel,
+};
+
+const productFromServiceInvalid = {
+  status: 'NOT_FOUND',
+  data: { message: 'Product not found' },
 };
 
 const productsFromServiceSuccessful = {
-  status: 'SUCCESSFULL',
-  data: productsFromDB,
+  status: 'SUCCESSFUL',
+  data: productsFromModel,
 };
 
 module.exports = {
-  productFromDB,
   productFromModel,
   productFromServiceSuccessful,
-  productsFromDB,
+  productFromServiceInvalid,
   productsFromModel,
   productsFromServiceSuccessful,
 };

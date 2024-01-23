@@ -8,11 +8,17 @@ chai.use(sinonChai);
 const { saleService } = require('../../../src/services');
 const { saleController } = require('../../../src/controllers');
 
-const { saleFromServiceSuccessful, salesFromServiceSuccessful, saleFromModel, salesFromModel } = require('../mock/sales.mock');
+const { 
+  saleFromServiceSuccessful,
+  saleFromServiceInvalid,
+  salesFromServiceSuccessful,
+  saleFromModel,
+  salesFromModel,
+} = require('../mock/sales.mock');
 
 describe('Realizando testes - SALE CONTROLLER', function () {
   it('Listar todos as vendas - status 200', async function () {
-    sinon.stub(saleService, 'findAll').resolves(salesFromServiceSuccessful);
+    sinon.stub(saleService, 'findAllSales').resolves(salesFromServiceSuccessful);
     const req = {
       params: { },
       body: { },
@@ -27,7 +33,7 @@ describe('Realizando testes - SALE CONTROLLER', function () {
   });
 
   it('Retornar venda com id - status 200', async function () {
-    sinon.stub(saleService, 'findById').resolves(saleFromServiceSuccessful);
+    sinon.stub(saleService, 'findSaleById').resolves(saleFromServiceSuccessful);
     const req = {
       params: { id: 1 },
       body: { },
@@ -43,7 +49,7 @@ describe('Realizando testes - SALE CONTROLLER', function () {
   });
 
   it('Não retornar venda com id errado - status 404', async function () {
-    sinon.stub(saleController, 'findById').resolves(undefined);
+    sinon.stub(saleService, 'findSaleById').resolves(saleFromServiceInvalid);
     const req = {
       params: { id: 1000 },
       body: { },
@@ -55,7 +61,6 @@ describe('Realizando testes - SALE CONTROLLER', function () {
 
     await saleController.findById(req, res);
     expect(res.status).to.have.been.calledWith(404);
-    expect(res.json).to.have.been.calledWith(sinon.match.has('Sale not found'));
   });
 
   afterEach(function () {

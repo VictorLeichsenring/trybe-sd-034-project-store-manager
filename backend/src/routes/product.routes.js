@@ -9,5 +9,8 @@ route.post(
   validateProductFields,
   productController.createProduct,
 );
-
+route.put(
+  '/:id',
+  productController.updateProduct,
+);
 module.exports = route;

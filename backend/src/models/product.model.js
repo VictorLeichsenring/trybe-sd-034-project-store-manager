@@ -28,8 +28,30 @@ const insert = async (product) => {
   return insertId;
 };
 
+const update = async (product) => {
+  const { id, productInfo } = product;
+
+  // Substitui valores indefinidos por null
+  const sanitizedProductInfo = Object.fromEntries(
+    Object.entries(productInfo).map(([key, value]) => [key, value !== undefined ? value : null])
+  );
+
+  const setClause = Object.keys(sanitizedProductInfo)
+    .map((key) => `${key} = ?`)
+    .join(', ');
+
+  const query = `UPDATE products SET ${setClause} WHERE id = ?;`;
+  
+  // Cria um array com os valores
+  const values = [...Object.values(sanitizedProductInfo), id];
+
+  await connection.execute(query, values);
+  return id;
+};
+
 module.exports = {
   findAll,
   findById,
   insert,
+  update,
 };

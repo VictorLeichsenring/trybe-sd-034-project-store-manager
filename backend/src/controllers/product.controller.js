@@ -3,6 +3,7 @@ const mapStatusHTTP = require('../utils/mapStatusHTTP');
 
 const findAllProducts = async (_req, res) => {
   const { status, data } = await productService.findAll();
+
   return res.status(mapStatusHTTP(status)).json(data);
 };
 
@@ -19,8 +20,18 @@ const createProduct = async (req, res) => {
   return res.status(mapStatusHTTP(status)).json(data);
 };
 
+const updateProduct = async (req, res) => {
+  const { id } = req.params;
+  const productInfo = req.body;
+  const productData = { id, productInfo };
+
+  const { status, data } = await productService.updateProduct(productData);
+  return res.status(mapStatusHTTP(status)).json(data);
+};
+
 module.exports = {
   findAllProducts,
   findProductById,
   createProduct,
+  updateProduct,
 };
