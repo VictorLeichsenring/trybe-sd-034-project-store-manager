@@ -17,24 +17,25 @@ const validateUpdateProduct = async (keysObjectToValidate) => {
 const validateNewSale = async (sales) => {
   const validations = await Promise.all(
     sales.map(async (sale) => {
-      const { error } = saleSchema.validate(sale);
+      try {
+        const product = await productModel.findById(sale.productId);
+        if (!product) return { status: 'NOT_FOUND', message: 'Product not found' };
 
-      if (error) {
-        return { status: 400, message: error.details[0].message };
+        if (sale.quantity < 1) {
+          return { 
+            status: 'INVALID_VALUE',
+            message: '"quantity" must be greater than or equal to 1', 
+          }; 
+        }
+
+        return null;
+      } catch (error) {
+        return { status: 500, message: 'Internal Server Error' };
       }
-
-      const product = await productModel.findById(sale.productId);
-      if (!product) {
-        return { status: 404, message: 'Product not found' };
-      }
-
-      return null; // Retorna null se a validação foi bem-sucedida
     }),
   );
 
-  const firstError = validations.find((result) => result !== null);
-
-  return firstError || null; // Retorna o primeiro erro encontrado ou null se todas as validações foram bem-sucedidas
+  return validations.find((result) => result !== null) || null;
 };
 module.exports = {
   validateNewProduct,
