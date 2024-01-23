@@ -15,7 +15,7 @@ const findById = async (productId) => {
 };
 
 const insertProduct = async (productObject) => {
-  const error = schema.validateRequestTravel(productObject);
+  const error = schema.validateNewProduct(productObject);
   if (error) return { status: error.status, data: { message: error.message } };
 
   const newProductId = await productModel.insert(productObject);
