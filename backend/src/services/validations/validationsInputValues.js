@@ -1,4 +1,4 @@
-const { addNewProductSchema, saleSchema, updateProductSchema } = require('./schemas');
+const { addNewProductSchema, updateProductSchema } = require('./schemas');
 const { productModel } = require('../../models');
 
 const validateNewProduct = (keysObjectToValidate) => {
