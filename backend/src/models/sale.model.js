@@ -8,12 +8,12 @@ const findAll = async () => {
     + 'JOIN sales s ON sp.sale_id = s.id '
     + 'ORDER BY sp.sale_id, sp.product_id',
   );
-  return sales;
+  return camelize(sales);
 };
 
 const findById = async (saleId) => {
   const [sale] = await connection.execute(
-    'SELECT s.id AS saleId, s.date AS date, sp.product_id AS productId, sp.quantity AS quantity '
+    'SELECT s.date AS date, sp.product_id AS productId, sp.quantity AS quantity '
     + 'FROM sales_products sp '
     + 'JOIN sales s ON sp.sale_id = s.id '
     + 'WHERE sp.sale_id = ? '
