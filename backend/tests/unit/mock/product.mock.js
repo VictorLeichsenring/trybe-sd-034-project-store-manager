@@ -9,6 +9,13 @@ const productsFromModel = [
   },
 ];
 
+const insertId = 4;
+
+const newProduct = {
+  id: 8,
+  name: 'banana',
+};
+
 const productsFromDB = [
   {
     id: 1,
@@ -34,6 +41,11 @@ const productFromServiceSuccessful = {
   data: productFromModel,
 };
 
+const productInsertFromServiceSuccessful = {
+  status: 'CREATED',
+  data: newProduct,
+};
+
 const productFromServiceInvalid = {
   status: 'NOT_FOUND',
   data: { message: 'Product not found' },
@@ -46,9 +58,12 @@ const productsFromServiceSuccessful = {
 
 module.exports = {
   productsFromDB,
+  newProduct,
+  insertId,
   productFromDB,
   productFromModel,
   productFromServiceSuccessful,
+  productInsertFromServiceSuccessful,
   productFromServiceInvalid,
   productsFromModel,
   productsFromServiceSuccessful,
