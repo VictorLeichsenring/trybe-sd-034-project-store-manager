@@ -11,6 +11,7 @@ route.post(
 );
 route.put(
   '/:id',
+  validateProductFields,
   productController.updateProduct,
 );
 module.exports = route;

@@ -24,6 +24,9 @@ const insertProduct = async (productObject) => {
 };
 
 const updateProduct = async (productObject) => {
+  const error = await schema.validateUpdateProduct(productObject);
+  if (error) return { status: error.status, data: { message: error.message } };
+
   await productModel.update(productObject);
   const UpdatedProduct = await productModel.findById(productObject.id);
   return { status: 'CREATED', data: UpdatedProduct };

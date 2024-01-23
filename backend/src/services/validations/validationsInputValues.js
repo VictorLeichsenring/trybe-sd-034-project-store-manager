@@ -1,8 +1,16 @@
-const { addNewProductSchema, saleSchema } = require('./schemas');
+const { addNewProductSchema, saleSchema, updateProductSchema } = require('./schemas');
 const { productModel } = require('../../models');
 
 const validateNewProduct = (keysObjectToValidate) => {
   const { error } = addNewProductSchema.validate(keysObjectToValidate);
+  if (error) return { status: 'INVALID_VALUE', message: error.message };
+};
+
+const validateUpdateProduct = async (keysObjectToValidate) => {
+  const product = await productModel.findById(keysObjectToValidate.id);
+  if (!product) return { status: 'NOT_FOUND', message: 'Product not found' };
+
+  const { error } = updateProductSchema.validate(keysObjectToValidate.productInfo);
   if (error) return { status: 'INVALID_VALUE', message: error.message };
 };
 
@@ -30,5 +38,6 @@ const validateNewSale = async (sales) => {
 };
 module.exports = {
   validateNewProduct,
+  validateUpdateProduct,
   validateNewSale,
 };
