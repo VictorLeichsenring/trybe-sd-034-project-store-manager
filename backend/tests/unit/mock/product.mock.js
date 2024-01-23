@@ -9,7 +9,22 @@ const productsFromModel = [
   },
 ];
 
+const productsFromDB = [
+  {
+    id: 1,
+    name: 'Martelo de Thor',
+  },
+  {
+    id: 2,
+    name: 'Traje de encolhimento',
+  },
+];
+
 const productFromModel = {
+  id: 1,
+  name: 'Martelo de Thor',
+};
+const productFromDB = {
   id: 1,
   name: 'Martelo de Thor',
 };
@@ -30,6 +45,8 @@ const productsFromServiceSuccessful = {
 };
 
 module.exports = {
+  productsFromDB,
+  productFromDB,
   productFromModel,
   productFromServiceSuccessful,
   productFromServiceInvalid,
