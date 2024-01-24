@@ -24,12 +24,16 @@ describe('Realizando testes - PRODUCT MODEL', function () {
     expect(modelResponse).to.be.deep.equal(productFromDB);
   });
 
-  // it('Inserir um produto no banco de dados', async function () {
-  //   sinon.stub(connection, 'execute').resolves(insertId);
-  //   const inputData = { name: 'produto' };
-  //   const modelResponse = await productModel.insert(inputData);
-  //   expect(modelResponse).to.be.a('object');
-  // });
+  it('Inserir um produto no banco de dados', async function () {
+    const insertId = 123; // Substitua pelo valor que você espera como resultado da inserção
+    sinon.stub(connection, 'execute').resolves([{ insertId }]);
+    
+    const inputData = { name: 'produto' };
+    const modelResponse = await productModel.insert(inputData);
+
+    expect(modelResponse).to.be.a('number'); // Supondo que você está retornando o ID da inserção
+    expect(modelResponse).to.be.equal(insertId);
+  });
 
   afterEach(function () {
     sinon.restore();
