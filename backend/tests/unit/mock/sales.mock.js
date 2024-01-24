@@ -68,6 +68,19 @@ const salesFromServiceSuccessful = {
   data: salesFromModel,
 };
 
+const newSale = [
+  [
+    {
+      productId: 2,
+      quantity: 1,
+    },
+    {
+      productId: 3,
+      quantity: 1,
+    },
+  ],
+];
+
 const saleInserida = {
   id: 3,
   itemsSold: [
@@ -84,6 +97,7 @@ const saleInserida = {
 
 module.exports = {
   saleInserida,
+  newSale,
   salesFromDB,
   saleFromDB,
   salesFromModel,

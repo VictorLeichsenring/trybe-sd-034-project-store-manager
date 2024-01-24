@@ -1,6 +1,6 @@
 const { expect } = require('chai');
 const sinon = require('sinon');
-const { validateNewProduct, validateUpdateProduct, validateNewSale } = require('../../../src/services/validations/validationsInputValues');
+const { validateNewProduct, validateUpdateProduct } = require('../../../src/services/validations/validationsInputValues');
 const { productModel } = require('../../../src/models');
 const { addNewProductSchema, updateProductSchema } = require('../../../src/services/validations/schemas');
 
@@ -133,7 +133,7 @@ describe('Testes para as funções de validação', function () {
 
     afterEach(function () {
       // Restauração dos stubs específicos
-      findByIdStub.restore();
+      sinon.restore();
     });
   });
 });
