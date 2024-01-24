@@ -2,7 +2,6 @@ const { expect } = require('chai');
 const sinon = require('sinon');
 const { productService } = require('../../../src/services');
 const { productModel } = require('../../../src/models');
-const { schema } = require('../../../src/services/validations/schemas');
 
 describe('Testes de Mutabilidade - ProductService', function () {
   let sandbox;
