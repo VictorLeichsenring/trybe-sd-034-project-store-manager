@@ -13,6 +13,7 @@ describe('Realizando testes - PRODUCT SERVICE', function () {
 
     const responseService = await productService.findAll();
     expect(responseService.status).to.be.equal('SUCCESSFUL');
+    expect(responseService.data).to.deep.equal(productsFromModel);
   });
 
   it('Listar todos um produto pelo seu id', async function () {
@@ -20,6 +21,7 @@ describe('Realizando testes - PRODUCT SERVICE', function () {
     const inputData = 1;
     const responseService = await productService.findById(inputData);
     expect(responseService.status).to.be.equal('SUCCESSFUL');
+    expect(responseService.data).to.deep.equal(productFromModel);
   });
 
   it('Retorna erro se não encontrar produto pelo seu id', async function () {
@@ -27,6 +29,7 @@ describe('Realizando testes - PRODUCT SERVICE', function () {
     const inputData = 2;
     const responseService = await productService.findById(inputData);
     expect(responseService.status).to.be.equal('NOT_FOUND');
+    expect(responseService.data).to.be.a('object');
   });
 
   afterEach(function () {
