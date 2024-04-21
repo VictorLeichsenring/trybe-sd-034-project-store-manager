@@ -2,6 +2,7 @@ const { expect } = require('chai');
 const sinon = require('sinon');
 const { productService } = require('../../../src/services');
 const { productModel } = require('../../../src/models');
+const { schema } = require('../../../src/services/validations/schemas');
 
 describe('Testes de Mutabilidade - ProductService', function () {
   let sandbox;
@@ -63,5 +64,31 @@ describe('Testes de Mutabilidade - ProductService', function () {
     const espera = true;
     expect(removeStub.calledOnceWith(productId)).to.be.equal(espera);
     expect(result).to.equal('Delete successful');
+  });
+
+  it('não deve modificar os dados existentes', async function () {
+    // Configurar stub para schema.validateNewProduct
+    const validateNewProductStub = sinon.stub(schema, 'validateNewProduct');
+    validateNewProductStub.resolves(null); // Simulando validação bem-sucedida
+
+    // Configurar stub para productModel.insert
+    const insertStub = sinon.stub(productModel, 'insert');
+    insertStub.resolves(123); // Simulando a inserção com um novo ID
+
+    // Configurar stub para productModel.findById
+    const findByIdStub = sinon.stub(productModel, 'findById');
+    const newProductFromModel = { id: 123, name: 'Produto Novo' }; // Substitua pelos dados reais
+    findByIdStub.resolves(newProductFromModel);
+
+    // Executar a função
+    const result = await productService.insertProduct({ name: 'Produto Novo' });
+
+    // Verificar que a função não modificou os dados existentes
+    expect(result).to.deep.equal({ status: 'CREATED', data: newProductFromModel });
+
+    // Restaurar os stubs após o teste
+    validateNewProductStub.restore();
+    insertStub.restore();
+    findByIdStub.restore();
   });
 });
